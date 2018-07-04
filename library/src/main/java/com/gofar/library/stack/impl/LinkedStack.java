@@ -1,7 +1,8 @@
-package com.gofar.lib.stack.impl;
+package com.gofar.library.stack.impl;
 
-import com.gofar.lib.stack.IStack;
-import com.sun.istack.internal.NotNull;
+import android.support.annotation.NonNull;
+
+import com.gofar.library.stack.IStack;
 
 import java.util.EmptyStackException;
 import java.util.Iterator;
@@ -45,7 +46,7 @@ public class LinkedStack<E> implements IStack<E> {
 
     @Override
     public int search(Object o) {
-        return 0;
+        return lastIndexOf(o);
     }
 
     @Override
@@ -58,18 +59,41 @@ public class LinkedStack<E> implements IStack<E> {
         return size;
     }
 
-    @NotNull
+    @NonNull
     @Override
     public Iterator<E> iterator() {
         return new LinkedStackIterator();
     }
 
     private int lastIndexOf(Object o) {
-        return lastIndexOf(0, size - 1);
+        return lastIndexOf(o, 0);
     }
 
     private int lastIndexOf(Object o, int index) {
-
+        if (index >= size) {
+            throw new IndexOutOfBoundsException(index + ">=" + size);
+        }
+        if (o == null) {
+            int i = index;
+            Node<E> t = top;
+            while (i < size) {
+                if (t.item == null) {
+                    return i;
+                }
+                t = t.next;
+                i++;
+            }
+        } else {
+            int i = index;
+            Node<E> t = top;
+            while (i < size) {
+                if (o.equals(t.item)) {
+                    return i;
+                }
+                t = t.next;
+                i++;
+            }
+        }
         return -1;
     }
 
@@ -84,7 +108,7 @@ public class LinkedStack<E> implements IStack<E> {
     }
 
     private class LinkedStackIterator implements Iterator<E> {
-        private Node<E> cur;
+        private Node<E> cur = top;
 
         @Override
         public boolean hasNext() {

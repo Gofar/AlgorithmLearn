@@ -1,4 +1,4 @@
-package com.gofar.lib.stack;
+package com.gofar.library.stack;
 
 /**
  * 栈
@@ -11,7 +11,7 @@ public interface IStack<E> extends Iterable<E>{
     /**
      * 入栈
      *
-     * @param e
+     * @param e E
      */
     void push(E e);
 

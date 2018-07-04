@@ -1,6 +1,8 @@
-package com.gofar.lib.stack.impl;
+package com.gofar.library.stack.impl;
 
-import com.gofar.lib.stack.IStack;
+import android.support.annotation.NonNull;
+
+import com.gofar.library.stack.IStack;
 
 import java.util.Arrays;
 import java.util.EmptyStackException;
@@ -16,7 +18,7 @@ import java.util.Iterator;
 public class ArrayStack<E> implements IStack<E> {
 
     private Object[] elementData = {};
-    private int elementCount;
+    private int size;
 
     private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
 
@@ -25,14 +27,14 @@ public class ArrayStack<E> implements IStack<E> {
 
     @Override
     public void push(E e) {
-        ensureCapacity(elementCount + 1);
-        elementData[elementCount++] = e;
+        ensureCapacity(size + 1);
+        elementData[size++] = e;
     }
 
     @Override
     public E pop() {
         E obj = top();
-        removeElementAt(elementCount - 1);
+        removeElementAt(size - 1);
         return obj;
     }
 
@@ -41,28 +43,29 @@ public class ArrayStack<E> implements IStack<E> {
         if (empty()) {
             throw new EmptyStackException();
         }
-        return elementAt(elementCount - 1);
+        return elementAt(size - 1);
     }
 
     @Override
     public int search(Object o) {
         int i = lastIndexOf(o);
         if (i >= 0) {
-            return elementCount - i;
+            return size - i;
         }
         return -1;
     }
 
     @Override
     public boolean empty() {
-        return elementCount == 0;
+        return size == 0;
     }
 
     @Override
     public int size() {
-        return elementCount;
+        return size;
     }
 
+    @NonNull
     @Override
     public Iterator<E> iterator() {
         return new ArrayStackIterator();
@@ -117,27 +120,27 @@ public class ArrayStack<E> implements IStack<E> {
      * @param index 元素index
      */
     private void removeElementAt(int index) {
-        if (index >= elementCount) {
-            throw new ArrayIndexOutOfBoundsException(index + ">=" + elementCount);
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException(index + ">=" + size);
         } else if (index < 0) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
-        int numMoved = elementCount - index - 1;
+        int numMoved = size - index - 1;
         if (numMoved > 0) {
             // 移除元素
             System.arraycopy(elementData, index + 1, elementData, index, numMoved);
         }
         // 主动置空，以便gc回收
-        elementData[--elementCount] = null;
+        elementData[--size] = null;
     }
 
     private int lastIndexOf(Object o) {
-        return lastIndexOf(o, elementCount - 1);
+        return lastIndexOf(o, size - 1);
     }
 
     private int lastIndexOf(Object o, int index) {
-        if (index >= elementCount) {
-            throw new ArrayIndexOutOfBoundsException(index + ">=" + elementCount);
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException(index + ">=" + size);
         }
         if (o == null) {
             for (int i = index; i >= 0; i--) {
@@ -157,13 +160,14 @@ public class ArrayStack<E> implements IStack<E> {
 
     private class ArrayStackIterator implements Iterator<E> {
 
-        private int i = elementCount;
+        private int i = size;
 
         @Override
         public boolean hasNext() {
             return i > 0;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public E next() {
             return (E) elementData[--i];
