@@ -20,7 +20,9 @@ public class Selection<T extends Comparable<T>> extends BaseSort<T> {
                     min = j;
                 }
             }
-            swap(nums, i, min);
+            if (min != i) {
+                swap(nums, i, min);
+            }
         }
     }
 }

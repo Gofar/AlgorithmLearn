@@ -100,13 +100,10 @@ public class ArrayStack<E> implements IStack<E> {
     }
 
     private int hugeCapacity(int minCapacity) {
-        {
-            if (minCapacity < 0) {
-                throw new OutOfMemoryError();
-            }
-            return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
+        if (minCapacity < 0) {
+            throw new OutOfMemoryError();
         }
-
+        return (minCapacity > MAX_ARRAY_SIZE) ? Integer.MAX_VALUE : MAX_ARRAY_SIZE;
     }
 
     @SuppressWarnings("unchecked")
