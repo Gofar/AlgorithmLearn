@@ -125,9 +125,11 @@ public class ArrayStack<E> implements IStack<E> {
         } else if (index < 0) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
+        // index后面的数据需要往前移动
+        // 需要移动的元素数量
         int numMoved = size - index - 1;
         if (numMoved > 0) {
-            // 移除元素
+            // 将index+1开始的元素往前移动一位，复制到index位置
             System.arraycopy(elementData, index + 1, elementData, index, numMoved);
         }
         // 主动置空，以便gc回收
