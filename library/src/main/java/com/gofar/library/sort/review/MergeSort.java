@@ -1,4 +1,4 @@
-package com.gofar.library.sort;
+package com.gofar.library.sort.review;
 
 /**
  * 归并排序
