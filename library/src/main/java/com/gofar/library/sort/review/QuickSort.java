@@ -2,7 +2,10 @@ package com.gofar.library.sort.review;
 
 /**
  * 快速排序
- * 通过
+ * 通过一趟排序将数组分为两个独立的部分，其中一部分记录的关键字均比另一部分小，
+ * 分别对这两部分进行，直到整个数组有序。
+ * 时间复杂度：O(nlogn),元素少时效率不如插入排序。
+ *
  * @author lcf
  * @date 17/7/2018 下午 5:05
  * @since 1.0
@@ -17,8 +20,11 @@ public class QuickSort {
         if (low >= high) {
             return;
         }
+        // 查找中轴
         int middle = getMiddle(nums, low, high);
+        // 对低字段进行递归排序
         quick(nums, low, middle - 1);
+        // 对高字段进行递归排序
         quick(nums, middle + 1, high);
     }
 
