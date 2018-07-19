@@ -27,4 +27,43 @@ public class HeapSort {
             }
         }
     }
+
+    private void test(int[] nums) {
+        int size = nums.length;
+        for (int i = (size - 2) / 2; i >= 0; i--) {
+            int k = i;
+            while (2 * k + 2 < size) {
+                int j = 2 * k + 1;
+                if (nums[j] < nums[j + 1]) {
+                    j++;
+                }
+                if (nums[k] < nums[j]) {
+                    swap(nums, k, j);
+                    k = j;
+                }
+            }
+        }
+    }
+
+    private void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+
+    private void test2(int[] nums, int last) {
+        for (int i = 0; i < (last - 2) / 2; i++) {
+            int k = i;
+            while (2 * k + 2 < last) {
+                int j = 2 * k + 1;
+                if (nums[j] < nums[j + 1]) {
+                    j++;
+                }
+                if (nums[k] < nums[j]) {
+                    swap(nums, k, j);
+                    k = j;
+                }
+            }
+        }
+    }
 }
