@@ -1,5 +1,7 @@
 package com.gofar.library.sort.review;
 
+import java.util.Arrays;
+
 /**
  * 归并排序
  * 将两个（或两个以上）有序表合并成一个新的有序表，
@@ -12,7 +14,11 @@ package com.gofar.library.sort.review;
  * @since 1.0
  */
 public class MergeSort {
-    public void sort(int[] nums, int low, int high) {
+    public void sort(int[] nums) {
+        sort(nums, 0, nums.length - 1);
+    }
+
+    private void sort(int[] nums, int low, int high) {
         int mid = (low + high) / 2;
         if (low < high) {
             sort(nums, low, mid);
@@ -21,7 +27,8 @@ public class MergeSort {
         }
     }
 
-    public void merge(int[] nums, int low, int mid, int high) {
+    private void merge(int[] nums, int low, int mid, int high) {
+        System.out.println(low+"#"+mid+"#"+high+"#"+ Arrays.toString(nums));
         int[] temp = new int[high - low + 1];
         int i = low;
         int j = mid + 1;
